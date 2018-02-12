@@ -251,7 +251,7 @@ public class MainActivity extends Activity implements Runnable {
                                 OutputStream os = mBluetoothSocket
                                         .getOutputStream();
 
-                                String message = "Hello Print";
+                                String message = getCollectionMessage("018737737","Md. Rafiqul Amin",5000,"Hasan");
                                 os.write(message.getBytes());
                                 //This is printer specific code you can comment ==== > Start
 
@@ -292,5 +292,29 @@ public class MainActivity extends Activity implements Runnable {
 
 
     };
+
+    private String getCollectionMessage(String accountNo,String accountName, double amount, String printedBy ) {
+        StringBuilder stringBuilder = new StringBuilder();
+
+
+        stringBuilder.append(String.format("** Leads Corporation Limited **\n", amount));
+        stringBuilder.append(String.format("           Touch Point           \n", amount));
+        stringBuilder.append(String.format("................................\n", amount));
+
+        stringBuilder.append(String.format("Deposited amount: %.2f\n", amount));
+
+        stringBuilder.append(String.format("Account No: %s\n",accountNo));
+
+        stringBuilder.append(String.format("Account Name: %s\n", accountName));
+
+        stringBuilder.append("\n\n\n\n\n");
+
+        stringBuilder.append(String.format("................................\n", amount));
+        stringBuilder.append(String.format("Authorized by: %s\n", printedBy));
+
+        stringBuilder.append("\n\n\n\n");
+
+        return stringBuilder.toString();
+    }
 
 }
