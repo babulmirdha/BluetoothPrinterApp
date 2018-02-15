@@ -16,6 +16,7 @@ import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import java.io.IOException;
@@ -36,13 +37,21 @@ public class MainActivity extends Activity implements Runnable {
     private ProgressDialog mBluetoothConnectProgressDialog;
     private BluetoothSocket mBluetoothSocket;
     BluetoothDevice mBluetoothDevice;
-
+    private EditText accountNoEditText;
+    private EditText accountNameEditText;
+    private EditText amountEditText;
 
 
     @Override
     public void onCreate(Bundle mSavedInstanceState) {
         super.onCreate(mSavedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+        accountNoEditText =(EditText) findViewById(R.id.accountNoEditText);
+        accountNameEditText =(EditText)  findViewById(R.id.accountNameEditText);
+        amountEditText =(EditText)  findViewById(R.id.amountEditText);
+
         mScan = (Button) findViewById(R.id.Scan);
         mScan.setOnClickListener(scanClickListener);
 
@@ -182,11 +191,17 @@ public class MainActivity extends Activity implements Runnable {
         }
     }
 
+    private boolean printClick;
     private Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             mBluetoothConnectProgressDialog.dismiss();
             Toast.makeText(MainActivity.this, "DeviceConnected", Toast.LENGTH_SHORT).show();
+           if(printClick){
+               printToBT();
+           }else {
+               printClick = false;
+           }
         }
     };
 
@@ -212,7 +227,7 @@ public class MainActivity extends Activity implements Runnable {
     private View.OnClickListener scanClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-
+                    printClick= false;
                     mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
                     if (mBluetoothAdapter == null) {
                         Toast.makeText(MainActivity.this, "Message1", Toast.LENGTH_SHORT).show();
@@ -238,49 +253,52 @@ public class MainActivity extends Activity implements Runnable {
         @Override
         public void onClick(View v) {
 
-
-
-                    if (mBluetoothSocket == null) {
-                        scanClickListener.onClick(null);
-                        return;
-                    }
-
-                    Thread t = new Thread() {
-                        public void run() {
-                            try {
-                                OutputStream os = mBluetoothSocket
-                                        .getOutputStream();
-
-                                String message = getCollectionMessage("018737737","Md. Rafiqul Amin",5000,"Hasan");
-                                os.write(message.getBytes());
-                                //This is printer specific code you can comment ==== > Start
-
-                                // Setting height
-                                int gs = 29;
-                                os.write(intToByteArray(gs));
-                                int h = 104;
-                                os.write(intToByteArray(h));
-                                int n = 162;
-                                os.write(intToByteArray(n));
-
-                                // Setting Width
-                                int gs_width = 29;
-                                os.write(intToByteArray(gs_width));
-                                int w = 119;
-                                os.write(intToByteArray(w));
-                                int n_width = 2;
-                                os.write(intToByteArray(n_width));
-
-
-                            } catch (Exception e) {
-                                Log.e("MainActivity", "Exe ", e);
-                            }
-                        }
-                    };
-                    t.start();
+            printToBT();
+            printClick= true;
                 }
 
     };
+
+    private void printToBT() {
+        if (mBluetoothSocket == null) {
+            scanClickListener.onClick(null);
+            return;
+        }
+
+        Thread t = new Thread() {
+            public void run() {
+                try {
+                    OutputStream os = mBluetoothSocket
+                            .getOutputStream();
+
+                    String message = getCollectionMessage(accountNoEditText.getText().toString(),accountNameEditText.getText().toString(),Double.parseDouble(amountEditText.getText().toString()),"Hasan");
+                    os.write(message.getBytes());
+                    //This is printer specific code you can comment ==== > Start
+
+                    // Setting height
+                    int gs = 29;
+                    os.write(intToByteArray(gs));
+                    int h = 104;
+                    os.write(intToByteArray(h));
+                    int n = 162;
+                    os.write(intToByteArray(n));
+
+                    // Setting Width
+                    int gs_width = 29;
+                    os.write(intToByteArray(gs_width));
+                    int w = 119;
+                    os.write(intToByteArray(w));
+                    int n_width = 2;
+                    os.write(intToByteArray(n_width));
+
+
+                } catch (Exception e) {
+                    Log.e("MainActivity", "Exe ", e);
+                }
+            }
+        };
+        t.start();
+    }
 
     private View.OnClickListener disableClickListener = new View.OnClickListener() {
         @Override

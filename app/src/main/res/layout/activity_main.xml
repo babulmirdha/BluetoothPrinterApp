@@ -6,12 +6,61 @@
     android:orientation="vertical">
 
 
-    <Button
-        android:id="@+id/Scan"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="Scan"></Button>
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Account no" />
+
+        <EditText
+            android:id="@+id/accountNoEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="103860115220" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Account Name" />
+
+        <EditText
+            android:id="@+id/accountNameEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Md. Bashir Ahmed" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Amount" />
+
+        <EditText
+            android:id="@+id/amountEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:inputType="numberDecimal"
+            android:text="500" />
+
+    </LinearLayout>
 
     <Button
         android:id="@+id/mPrint"
@@ -20,10 +69,29 @@
         android:layout_marginTop="10dp"
         android:text="Print"></Button>
 
-    <Button
-        android:id="@+id/dis"
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="Dissable"></Button>
+        android:layout_height="wrap_content" android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/Scan"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Scan"></Button>
+
+        <Button
+            android:id="@+id/dis"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Dissable"></Button>
+
+    </LinearLayout>
+
+
+
 </LinearLayout>
