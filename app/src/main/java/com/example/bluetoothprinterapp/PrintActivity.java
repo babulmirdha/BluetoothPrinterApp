@@ -26,7 +26,7 @@ import java.util.Set;
 import java.util.UUID;
 
 
-public class MainActivity extends Activity implements Runnable {
+public class PrintActivity extends Activity implements Runnable {
     protected static final String TAG = "TAG";
     private static final int REQUEST_CONNECT_DEVICE = 1;
     private static final int REQUEST_ENABLE_BT = 2;
@@ -147,11 +147,11 @@ public class MainActivity extends Activity implements Runnable {
             case REQUEST_ENABLE_BT:
                 if (mResultCode == Activity.RESULT_OK) {
                     ListPairedDevices();
-                    Intent connectIntent = new Intent(MainActivity.this,
-                            DeviceListActivity.class);
+                    Intent connectIntent = new Intent(PrintActivity.this,
+                            BTDeviceListActivity.class);
                     startActivityForResult(connectIntent, REQUEST_CONNECT_DEVICE);
                 } else {
-                    Toast.makeText(MainActivity.this, "Message", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(PrintActivity.this, "Message", Toast.LENGTH_SHORT).show();
                 }
                 break;
         }
@@ -196,7 +196,7 @@ public class MainActivity extends Activity implements Runnable {
         @Override
         public void handleMessage(Message msg) {
             mBluetoothConnectProgressDialog.dismiss();
-            Toast.makeText(MainActivity.this, "DeviceConnected", Toast.LENGTH_SHORT).show();
+            Toast.makeText(PrintActivity.this, "DeviceConnected", Toast.LENGTH_SHORT).show();
            if(printClick){
                printToBT();
            }else {
@@ -230,7 +230,7 @@ public class MainActivity extends Activity implements Runnable {
                     printClick= false;
                     mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
                     if (mBluetoothAdapter == null) {
-                        Toast.makeText(MainActivity.this, "Message1", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(PrintActivity.this, "Message1", Toast.LENGTH_SHORT).show();
                     } else {
                         if (!mBluetoothAdapter.isEnabled()) {
                             Intent enableBtIntent = new Intent(
@@ -239,8 +239,8 @@ public class MainActivity extends Activity implements Runnable {
                                     REQUEST_ENABLE_BT);
                         } else {
                             ListPairedDevices();
-                            Intent connectIntent = new Intent(MainActivity.this,
-                                    DeviceListActivity.class);
+                            Intent connectIntent = new Intent(PrintActivity.this,
+                                    BTDeviceListActivity.class);
                             startActivityForResult(connectIntent,
                                     REQUEST_CONNECT_DEVICE);
                         }
@@ -293,7 +293,7 @@ public class MainActivity extends Activity implements Runnable {
 
 
                 } catch (Exception e) {
-                    Log.e("MainActivity", "Exe ", e);
+                    Log.e("PrintActivity", "Exe ", e);
                 }
             }
         };

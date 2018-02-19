@@ -21,7 +21,7 @@ import android.widget.TextView;
 import java.util.Set;
 
 
-public class DeviceListActivity extends Activity {
+public class BTDeviceListActivity extends Activity {
     protected static final String TAG = "TAG";
     private BluetoothAdapter mBluetoothAdapter;
     private ArrayAdapter<String> mPairedDevicesArrayAdapter;
