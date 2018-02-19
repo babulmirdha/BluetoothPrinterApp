@@ -45,7 +45,7 @@ public class PrintActivity extends Activity implements Runnable {
     @Override
     public void onCreate(Bundle mSavedInstanceState) {
         super.onCreate(mSavedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_bt_print);
 
 
         accountNoEditText =(EditText) findViewById(R.id.accountNoEditText);

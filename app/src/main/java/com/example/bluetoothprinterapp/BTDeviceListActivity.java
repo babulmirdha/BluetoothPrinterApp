@@ -30,10 +30,10 @@ public class BTDeviceListActivity extends Activity {
     protected void onCreate(Bundle mSavedInstanceState) {
         super.onCreate(mSavedInstanceState);
         requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
-        setContentView(R.layout.device_list);
+        setContentView(R.layout.bt_device_list);
 
         setResult(Activity.RESULT_CANCELED);
-        mPairedDevicesArrayAdapter = new ArrayAdapter<String>(this, R.layout.device_name);
+        mPairedDevicesArrayAdapter = new ArrayAdapter<String>(this, R.layout.bt_device_name);
 
         ListView mPairedListView = (ListView) findViewById(R.id.paired_devices);
         mPairedListView.setAdapter(mPairedDevicesArrayAdapter);
