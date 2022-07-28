@@ -22,6 +22,7 @@ import android.widget.Toast;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.ByteBuffer;
+import java.nio.charset.StandardCharsets;
 import java.util.Set;
 import java.util.UUID;
 
@@ -272,7 +273,7 @@ public class PrintActivity extends Activity implements Runnable {
                             .getOutputStream();
 
                     String message = getCollectionMessage(accountNoEditText.getText().toString(),accountNameEditText.getText().toString(),Double.parseDouble(amountEditText.getText().toString()),"Hasan");
-                    os.write(message.getBytes());
+                    os.write(message.getBytes(StandardCharsets.UTF_8));
                     //This is printer specific code you can comment ==== > Start
 
                     // Setting height
@@ -315,8 +316,8 @@ public class PrintActivity extends Activity implements Runnable {
         StringBuilder stringBuilder = new StringBuilder();
 
 
-        stringBuilder.append(String.format("** Leads Corporation Limited **\n", amount));
-        stringBuilder.append(String.format("           Touch Point           \n", amount));
+        stringBuilder.append(String.format("** Alor Feri Pathagar **\n", amount));
+        stringBuilder.append(String.format("           Member Reg.           \n", amount));
         stringBuilder.append(String.format("................................\n", amount));
 
         stringBuilder.append(String.format("Deposited amount: %.2f\n", amount));
@@ -325,12 +326,12 @@ public class PrintActivity extends Activity implements Runnable {
 
         stringBuilder.append(String.format("Account Name: %s\n", accountName));
 
-        stringBuilder.append("\n\n\n\n\n");
+        stringBuilder.append("\n");
 
         stringBuilder.append(String.format("................................\n", amount));
         stringBuilder.append(String.format("Authorized by: %s\n", printedBy));
 
-        stringBuilder.append("\n\n\n\n");
+        stringBuilder.append("\n\n");
 
         return stringBuilder.toString();
     }
