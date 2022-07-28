@@ -6,10 +6,7 @@ package infixsoft.imrankst1221.printer;
 
 import android.app.Activity;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.net.Uri;
 import android.os.Bundle;
 
 import java.io.IOException;
@@ -26,7 +23,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
-import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
@@ -65,21 +61,8 @@ public class MainActivity extends Activity {
             }
         });
 
-//        Picasso.get().load("https://backoffice.alorferi.com/images/defaults/logo_large.png")
-//                .into(imageView, new Callback() {
-//                    @Override
-//                    public void onSuccess() {
-//
-//                    }
-//
-//                    @Override
-//                    public void onError(Exception e) {
-//
-//                    }
-//                });
-
         Picasso.get()
-                .load("https://backoffice.alorferi.com/images/defaults/logo_large.png")
+                .load("https://backoffice.alorferi.com/libraries/4911b1c0-13b2-4bf5-b452-cac734ef55c1/members/bac1bedf-e660-4817-85ab-71100b9d3ebb/qr")
                 .into(new Target() {
                     @Override
                     public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
@@ -178,14 +161,18 @@ public class MainActivity extends Activity {
                 outputStream.write(printformat);
 
                 //print title
-                printUnicode();
+                printUnicodeNumberSign();
+
+
+                printCustom("Alor Feri Pathagar", 1, 1);
+
                 //print normal text
                 printCustom(message.getText().toString(), 0, 0);
-                printPhoto(R.drawable.img);
+//                printPhoto(R.drawable.img);
                 printNewLine();
                 printText("     >>>>   Thank you  <<<<     "); // total 32 char in a single line
                 //resetPrint(); //reset printer
-                printUnicode();
+                printUnicodeNumberSign();
                 printNewLine();
                 printNewLine();
 
@@ -252,10 +239,13 @@ public class MainActivity extends Activity {
 
 //            imageView.buildDrawingCache();
 
-//            Bitmap bmp  = mBitmap;
+            Bitmap bmp  = mBitmap;
 //            Bitmap bmp = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
 //            Bitmap bmp = imageView.getDrawingCache();
-            Bitmap bmp = BitmapFactory.decodeResource(getResources(), img);
+
+//            Bitmap bmp = Bitmap.createScaledBitmap(mBitmap, 72, 72, true);
+
+//            Bitmap bmp = BitmapFactory.decodeResource(getResources(), img);
             if (bmp != null) {
                 byte[] command = Utils.decodeBitmap(bmp);
                 outputStream.write(PrinterCommands.ESC_ALIGN_CENTER);
@@ -270,7 +260,7 @@ public class MainActivity extends Activity {
     }
 
     //print unicode
-    public void printUnicode() {
+    public void printUnicodeNumberSign() {
         try {
             outputStream.write(PrinterCommands.ESC_ALIGN_CENTER);
             printText(Utils.UNICODE_TEXT);
