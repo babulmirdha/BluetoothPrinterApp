@@ -3,10 +3,14 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/BluetoothPrinterApp.iml" filepath="$PROJECT_DIR$/.idea/modules/BluetoothPrinterApp.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/BluetoothPrinterApp.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/BluetoothPrinterApp.app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/BluetoothPrinterApp.app.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/BluetoothPrinterApp.app.androidTest.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/BluetoothPrinterApp.app.main.iml" filepath="$PROJECT_DIR$/.idea/modules/app/BluetoothPrinterApp.app.main.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/BluetoothPrinterApp.app.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/BluetoothPrinterApp.app.unitTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/BluetoothPrinterApp.BT-Printer.iml" filepath="$PROJECT_DIR$/.idea/modules/app/BluetoothPrinterApp.BT-Printer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/BT-Printer/BluetoothPrinterApp.BT-Printer.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/BT-Printer/BluetoothPrinterApp.BT-Printer.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/BT-Printer/BluetoothPrinterApp.BT-Printer.main.iml" filepath="$PROJECT_DIR$/.idea/modules/BT-Printer/BluetoothPrinterApp.BT-Printer.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/BT-Printer/BluetoothPrinterApp.BT-Printer.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/BT-Printer/BluetoothPrinterApp.BT-Printer.unitTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Thermal-Printer/BluetoothPrinterApp.Thermal-Printer.iml" filepath="$PROJECT_DIR$/.idea/modules/Thermal-Printer/BluetoothPrinterApp.Thermal-Printer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Thermal-Printer/BluetoothPrinterApp.Thermal-Printer.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/Thermal-Printer/BluetoothPrinterApp.Thermal-Printer.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Thermal-Printer/BluetoothPrinterApp.Thermal-Printer.main.iml" filepath="$PROJECT_DIR$/.idea/modules/Thermal-Printer/BluetoothPrinterApp.Thermal-Printer.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Thermal-Printer/BluetoothPrinterApp.Thermal-Printer.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/Thermal-Printer/BluetoothPrinterApp.Thermal-Printer.unitTest.iml" />
     </modules>
   </component>
 </project>
