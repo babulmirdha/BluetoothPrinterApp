@@ -26,7 +26,7 @@ import android.widget.EditText;
 public class MainActivity extends Activity{
     private String TAG = "Main Activity";
     EditText message;
-    Button btnPrint, btnBill, btnDonate;
+    Button btnPrint, btnBill;
 
     byte FONT_TYPE;
     private static BluetoothSocket btsocket;
@@ -39,7 +39,6 @@ public class MainActivity extends Activity{
         message = (EditText)findViewById(R.id.txtMessage);
         btnPrint = (Button)findViewById(R.id.btnPrint);
         btnBill = (Button)findViewById(R.id.btnBill);
-        btnDonate = (Button)findViewById(R.id.btnDonate);
 
         btnPrint.setOnClickListener(new OnClickListener() {
 
@@ -52,13 +51,6 @@ public class MainActivity extends Activity{
             @Override
             public void onClick(View v) {
                 printBill();
-            }
-        });
-        btnDonate.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.paypal_me)));
-                startActivity(browserIntent);
             }
         });
 
@@ -140,7 +132,7 @@ public class MainActivity extends Activity{
                 outputStream = btsocket.getOutputStream();
 
                 byte[] printformat = { 0x1B, 0*21, FONT_TYPE };
-                //outputStream.write(printformat);
+                outputStream.write(printformat);
 
                 //print title
                 printUnicode();
