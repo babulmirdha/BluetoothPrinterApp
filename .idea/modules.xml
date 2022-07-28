@@ -2,8 +2,11 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/BlueToothPrinterApp.iml" filepath="$PROJECT_DIR$/BlueToothPrinterApp.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/BluetoothPrinterApp.iml" filepath="$PROJECT_DIR$/.idea/modules/BluetoothPrinterApp.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/BluetoothPrinterApp.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/BluetoothPrinterApp.app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/BluetoothPrinterApp.app.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/BluetoothPrinterApp.app.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/BluetoothPrinterApp.app.main.iml" filepath="$PROJECT_DIR$/.idea/modules/app/BluetoothPrinterApp.app.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/BluetoothPrinterApp.app.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/BluetoothPrinterApp.app.unitTest.iml" />
     </modules>
   </component>
 </project>
