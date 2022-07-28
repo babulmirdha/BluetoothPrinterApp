@@ -3,9 +3,12 @@ package infixsoft.imrankst1221.printer;
 /**
  * Created by https://goo.gl/UAfmBd on 2/6/2017.
  */
+
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -21,24 +24,32 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
 
-public class MainActivity extends Activity{
+public class MainActivity extends Activity {
     private String TAG = "Main Activity";
     EditText message;
     Button btnPrint, btnBill;
+    ImageView imageView;
 
     byte FONT_TYPE;
     private static BluetoothSocket btsocket;
     private static OutputStream outputStream;
+    private Bitmap mBitmap;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        message = (EditText)findViewById(R.id.txtMessage);
-        btnPrint = (Button)findViewById(R.id.btnPrint);
-        btnBill = (Button)findViewById(R.id.btnBill);
+        message = (EditText) findViewById(R.id.txtMessage);
+        btnPrint = (Button) findViewById(R.id.btnPrint);
+        btnBill = (Button) findViewById(R.id.btnBill);
+        imageView = (ImageView) findViewById(R.id.imageView);
 
         btnPrint.setOnClickListener(new OnClickListener() {
 
@@ -54,16 +65,49 @@ public class MainActivity extends Activity{
             }
         });
 
+//        Picasso.get().load("https://backoffice.alorferi.com/images/defaults/logo_large.png")
+//                .into(imageView, new Callback() {
+//                    @Override
+//                    public void onSuccess() {
+//
+//                    }
+//
+//                    @Override
+//                    public void onError(Exception e) {
+//
+//                    }
+//                });
+
+        Picasso.get()
+                .load("https://backoffice.alorferi.com/images/defaults/logo_large.png")
+                .into(new Target() {
+                    @Override
+                    public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+
+                        mBitmap = bitmap;
+
+                        imageView.setImageBitmap(bitmap);
+                    }
+
+                    @Override
+                    public void onBitmapFailed(Exception e, Drawable errorDrawable) {
+
+                    }
+
+
+                    @Override
+                    public void onPrepareLoad(Drawable placeHolderDrawable) {
+                    }
+                });
+
     }
 
 
-
     protected void printBill() {
-        if(btsocket == null){
+        if (btsocket == null) {
             Intent BTIntent = new Intent(getApplicationContext(), DeviceList.class);
             this.startActivityForResult(BTIntent, DeviceList.REQUEST_CONNECT_BT);
-        }
-        else{
+        } else {
             OutputStream opstream = null;
             try {
                 opstream = btsocket.getOutputStream();
@@ -80,24 +124,24 @@ public class MainActivity extends Activity{
                     e.printStackTrace();
                 }
                 outputStream = btsocket.getOutputStream();
-                byte[] printformat = new byte[]{0x1B,0x21,0x03};
+                byte[] printformat = new byte[]{0x1B, 0x21, 0x03};
                 outputStream.write(printformat);
 
 
-                printCustom("Fair Group BD",2,1);
-                printCustom("Pepperoni Foods Ltd.",0,1);
-                printPhoto(R.drawable.ic_icon_pos);
-                printCustom("H-123, R-123, Dhanmondi, Dhaka-1212",0,1);
-                printCustom("Hot Line: +88000 000000",0,1);
-                printCustom("Vat Reg : 0000000000,Mushak : 11",0,1);
+                printCustom("Fair Group BD", 2, 1);
+                printCustom("Pepperoni Foods Ltd.", 0, 1);
+                printPhoto(R.drawable.img);
+                printCustom("H-123, R-123, Dhanmondi, Dhaka-1212", 0, 1);
+                printCustom("Hot Line: +88000 000000", 0, 1);
+                printCustom("Vat Reg : 0000000000,Mushak : 11", 0, 1);
                 String dateTime[] = getDateTime();
                 printText(leftRightAlign(dateTime[0], dateTime[1]));
-                printText(leftRightAlign("Qty: Name" , "Price "));
-                printCustom(new String(new char[32]).replace("\0", "."),0,1);
-                printText(leftRightAlign("Total" , "2,0000/="));
+                printText(leftRightAlign("Qty: Name", "Price "));
+                printCustom(new String(new char[32]).replace("\0", "."), 0, 1);
+                printText(leftRightAlign("Total", "2,0000/="));
                 printNewLine();
-                printCustom("Thank you for coming & we look",0,1);
-                printCustom("forward to serve you again",0,1);
+                printCustom("Thank you for coming & we look", 0, 1);
+                printCustom("forward to serve you again", 0, 1);
                 printNewLine();
                 printNewLine();
 
@@ -109,11 +153,10 @@ public class MainActivity extends Activity{
     }
 
     protected void printDemo() {
-        if(btsocket == null){
+        if (btsocket == null) {
             Intent BTIntent = new Intent(getApplicationContext(), DeviceList.class);
             this.startActivityForResult(BTIntent, DeviceList.REQUEST_CONNECT_BT);
-        }
-        else{
+        } else {
             OutputStream opstream = null;
             try {
                 opstream = btsocket.getOutputStream();
@@ -131,13 +174,13 @@ public class MainActivity extends Activity{
                 }
                 outputStream = btsocket.getOutputStream();
 
-                byte[] printformat = { 0x1B, 0*21, FONT_TYPE };
+                byte[] printformat = {0x1B, 0 * 21, FONT_TYPE};
                 outputStream.write(printformat);
 
                 //print title
                 printUnicode();
                 //print normal text
-                printCustom(message.getText().toString(),0,0);
+                printCustom(message.getText().toString(), 0, 0);
                 printPhoto(R.drawable.img);
                 printNewLine();
                 printText("     >>>>   Thank you  <<<<     "); // total 32 char in a single line
@@ -156,13 +199,13 @@ public class MainActivity extends Activity{
     //print custom
     private void printCustom(String msg, int size, int align) {
         //Print config "mode"
-        byte[] cc = new byte[]{0x1B,0x21,0x03};  // 0- normal size text
+        byte[] cc = new byte[]{0x1B, 0x21, 0x03};  // 0- normal size text
         //byte[] cc1 = new byte[]{0x1B,0x21,0x00};  // 0- normal size text
-        byte[] bb = new byte[]{0x1B,0x21,0x08};  // 1- only bold text
-        byte[] bb2 = new byte[]{0x1B,0x21,0x20}; // 2- bold with medium text
-        byte[] bb3 = new byte[]{0x1B,0x21,0x10}; // 3- bold with large text
+        byte[] bb = new byte[]{0x1B, 0x21, 0x08};  // 1- only bold text
+        byte[] bb2 = new byte[]{0x1B, 0x21, 0x20}; // 2- bold with medium text
+        byte[] bb3 = new byte[]{0x1B, 0x21, 0x10}; // 3- bold with large text
         try {
-            switch (size){
+            switch (size) {
                 case 0:
                     outputStream.write(cc);
                     break;
@@ -177,7 +220,7 @@ public class MainActivity extends Activity{
                     break;
             }
 
-            switch (align){
+            switch (align) {
                 case 0:
                     //left align
                     outputStream.write(PrinterCommands.ESC_ALIGN_LEFT);
@@ -204,13 +247,20 @@ public class MainActivity extends Activity{
     //print photo
     public void printPhoto(int img) {
         try {
-            Bitmap bmp = BitmapFactory.decodeResource(getResources(),
-                    img);
-            if(bmp!=null){
+
+//            BitmapDrawable drawable = (BitmapDrawable) imageView.getDrawable();
+
+//            imageView.buildDrawingCache();
+
+//            Bitmap bmp  = mBitmap;
+//            Bitmap bmp = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
+//            Bitmap bmp = imageView.getDrawingCache();
+            Bitmap bmp = BitmapFactory.decodeResource(getResources(), img);
+            if (bmp != null) {
                 byte[] command = Utils.decodeBitmap(bmp);
                 outputStream.write(PrinterCommands.ESC_ALIGN_CENTER);
                 printText(command);
-            }else{
+            } else {
                 Log.e("Print Photo error", "the file isn't exists");
             }
         } catch (Exception e) {
@@ -220,7 +270,7 @@ public class MainActivity extends Activity{
     }
 
     //print unicode
-    public void printUnicode(){
+    public void printUnicode() {
         try {
             outputStream.write(PrinterCommands.ESC_ALIGN_CENTER);
             printText(Utils.UNICODE_TEXT);
@@ -243,7 +293,7 @@ public class MainActivity extends Activity{
     }
 
     public static void resetPrint() {
-        try{
+        try {
             outputStream.write(PrinterCommands.ESC_FONT_COLOR_DEFAULT);
             outputStream.write(PrinterCommands.FS_FONT_ALIGN);
             outputStream.write(PrinterCommands.ESC_ALIGN_LEFT);
@@ -278,8 +328,8 @@ public class MainActivity extends Activity{
 
 
     private String leftRightAlign(String str1, String str2) {
-        String ans = str1 +str2;
-        if(ans.length() <31){
+        String ans = str1 + str2;
+        if (ans.length() < 31) {
             int n = (31 - str1.length() + str2.length());
             ans = str1 + new String(new char[n]).replace("\0", " ") + str2;
         }
@@ -289,9 +339,9 @@ public class MainActivity extends Activity{
 
     private String[] getDateTime() {
         final Calendar c = Calendar.getInstance();
-        String dateTime [] = new String[2];
-        dateTime[0] = c.get(Calendar.DAY_OF_MONTH) +"/"+ c.get(Calendar.MONTH) +"/"+ c.get(Calendar.YEAR);
-        dateTime[1] = c.get(Calendar.HOUR_OF_DAY) +":"+ c.get(Calendar.MINUTE);
+        String dateTime[] = new String[2];
+        dateTime[0] = c.get(Calendar.DAY_OF_MONTH) + "/" + c.get(Calendar.MONTH) + "/" + c.get(Calendar.YEAR);
+        dateTime[1] = c.get(Calendar.HOUR_OF_DAY) + ":" + c.get(Calendar.MINUTE);
         return dateTime;
     }
 
@@ -299,7 +349,7 @@ public class MainActivity extends Activity{
     protected void onDestroy() {
         super.onDestroy();
         try {
-            if(btsocket!= null){
+            if (btsocket != null) {
                 outputStream.close();
                 btsocket.close();
                 btsocket = null;
@@ -315,7 +365,7 @@ public class MainActivity extends Activity{
         super.onActivityResult(requestCode, resultCode, data);
         try {
             btsocket = DeviceList.getSocket();
-            if(btsocket != null){
+            if (btsocket != null) {
                 printText(message.getText().toString());
             }
 
