@@ -354,7 +354,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         try {
-            btsocket = DeviceListActivity.getSocket();
+            btsocket = DeviceListActivity.Companion.getSocket();
             if (btsocket != null) {
                 printText(message.getText().toString());
             }
