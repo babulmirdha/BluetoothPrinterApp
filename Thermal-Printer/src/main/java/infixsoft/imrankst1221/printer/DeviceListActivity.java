@@ -26,7 +26,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
-public class DeviceList extends ListActivity {
+public class DeviceListActivity extends ListActivity {
     private static String TAG = "---DeviceList";
 
     static public final int REQUEST_CONNECT_BT = 0*2300;

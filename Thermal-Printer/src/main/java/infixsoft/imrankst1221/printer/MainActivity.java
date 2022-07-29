@@ -88,8 +88,8 @@ public class MainActivity extends AppCompatActivity {
 
     protected void printBill() {
         if (btsocket == null) {
-            Intent BTIntent = new Intent(getApplicationContext(), DeviceList.class);
-            this.startActivityForResult(BTIntent, DeviceList.REQUEST_CONNECT_BT);
+            Intent BTIntent = new Intent(getApplicationContext(), DeviceListActivity.class);
+            this.startActivityForResult(BTIntent, DeviceListActivity.REQUEST_CONNECT_BT);
         } else {
             OutputStream opstream = null;
             try {
@@ -137,8 +137,8 @@ public class MainActivity extends AppCompatActivity {
 
     protected void printDemo() {
         if (btsocket == null) {
-            Intent BTIntent = new Intent(getApplicationContext(), DeviceList.class);
-            this.startActivityForResult(BTIntent, DeviceList.REQUEST_CONNECT_BT);
+            Intent BTIntent = new Intent(getApplicationContext(), DeviceListActivity.class);
+            this.startActivityForResult(BTIntent, DeviceListActivity.REQUEST_CONNECT_BT);
         } else {
             OutputStream opstream = null;
             try {
@@ -354,7 +354,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         try {
-            btsocket = DeviceList.getSocket();
+            btsocket = DeviceListActivity.getSocket();
             if (btsocket != null) {
                 printText(message.getText().toString());
             }
