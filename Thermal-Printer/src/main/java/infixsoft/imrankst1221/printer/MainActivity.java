@@ -4,18 +4,11 @@ package infixsoft.imrankst1221.printer;
  * Created by https://goo.gl/UAfmBd on 2/6/2017.
  */
 
-import android.app.Activity;
+import android.bluetooth.BluetoothSocket;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.UnsupportedEncodingException;
-import java.util.Calendar;
-
-import android.bluetooth.BluetoothSocket;
-import android.content.Intent;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -23,11 +16,18 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
+import java.util.Calendar;
 
-public class MainActivity extends Activity {
+
+public class MainActivity extends AppCompatActivity {
     private String TAG = "Main Activity";
     EditText message;
     Button btnPrint, btnBill;

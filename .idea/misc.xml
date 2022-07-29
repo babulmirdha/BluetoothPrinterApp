@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="BT-Printer/src/main/res/layout/bt_device_list.xml" value="0.1" />
         <entry key="Thermal-Printer/src/main/res/drawable/bg_button_normal.xml" value="0.1" />
         <entry key="Thermal-Printer/src/main/res/drawable/bg_gradient_toolbar.xml" value="0.1" />
         <entry key="Thermal-Printer/src/main/res/drawable/ic_circle.xml" value="0.1" />

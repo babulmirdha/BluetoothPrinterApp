@@ -1,6 +1,6 @@
 package com.example.bluetoothprinterapp
 
-import android.app.Activity
+import androidx.appcompat.app.AppCompatActivity
 import android.bluetooth.BluetoothAdapter
 import android.widget.ArrayAdapter
 import android.os.Bundle
@@ -16,12 +16,11 @@ import java.lang.Exception
 /**
  * Created by hp on 12/23/2016.
  */
-class BTDeviceListActivity : Activity() {
+class BTDeviceListActivity : AppCompatActivity() {
     private var mBluetoothAdapter: BluetoothAdapter? = null
     private var mPairedDevicesArrayAdapter: ArrayAdapter<String>? = null
     override fun onCreate(mSavedInstanceState: Bundle?) {
         super.onCreate(mSavedInstanceState)
-        requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS)
         setContentView(R.layout.bt_device_list)
         setResult(RESULT_CANCELED)
         mPairedDevicesArrayAdapter = ArrayAdapter(this, R.layout.bt_device_name)
@@ -66,6 +65,7 @@ class BTDeviceListActivity : Activity() {
                 setResult(RESULT_OK, mBackIntent)
                 finish()
             } catch (ex: Exception) {
+                ex.printStackTrace()
             }
         }
 

@@ -1,23 +1,19 @@
 package com.example.bluetoothprinterapp
 
-import android.app.Activity
+import androidx.appcompat.app.AppCompatActivity
 import android.bluetooth.BluetoothAdapter
 import android.app.ProgressDialog
 import android.bluetooth.BluetoothSocket
 import android.bluetooth.BluetoothDevice
 import android.widget.EditText
 import android.os.Bundle
-import com.example.bluetoothprinterapp.R
 import android.content.Intent
 import android.os.Handler
 import android.os.Message
 import android.util.Log
 import android.view.View
 import android.widget.Button
-import com.example.bluetoothprinterapp.PrintActivity
-import com.example.bluetoothprinterapp.BTDeviceListActivity
 import android.widget.Toast
-import com.example.bluetoothprinterapp.UnicodeFormatter
 import java.io.IOException
 import java.lang.Exception
 import java.lang.StringBuilder
@@ -28,7 +24,7 @@ import java.util.*
 /**
  * Created by hp on 12/23/2016.
  */
-class PrintActivity : Activity(), Runnable {
+class PrintActivity : AppCompatActivity(), Runnable {
     var mScan: Button? = null
     var mPrint: Button? = null
     var mDisc: Button? = null
@@ -119,15 +115,11 @@ class PrintActivity : Activity(), Runnable {
         finish()
     }
 
-    public override fun onActivityResult(
-        mRequestCode: Int, mResultCode: Int,
-        mDataIntent: Intent
-    ) {
-        super.onActivityResult(mRequestCode, mResultCode, mDataIntent)
-        when (mRequestCode) {
-            REQUEST_CONNECT_DEVICE -> if (mResultCode == RESULT_OK) {
-                val mExtra = mDataIntent.extras
-                val mDeviceAddress = mExtra!!.getString("DeviceAddress")
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        when (requestCode) {
+            REQUEST_CONNECT_DEVICE -> if (resultCode == RESULT_OK) {
+                val mDeviceAddress = data?.extras?.getString("DeviceAddress")
                 Log.v(TAG, "Coming incoming address $mDeviceAddress")
                 mBluetoothDevice = mBluetoothAdapter
                     ?.getRemoteDevice(mDeviceAddress)
@@ -139,7 +131,7 @@ class PrintActivity : Activity(), Runnable {
                 // pairToDevice(mBluetoothDevice); This method is replaced by
                 // progress dialog with thread
             }
-            REQUEST_ENABLE_BT -> if (mResultCode == RESULT_OK) {
+            REQUEST_ENABLE_BT -> if (resultCode == RESULT_OK) {
                 ListPairedDevices()
                 val connectIntent = Intent(this@PrintActivity,
                     BTDeviceListActivity::class.java)
