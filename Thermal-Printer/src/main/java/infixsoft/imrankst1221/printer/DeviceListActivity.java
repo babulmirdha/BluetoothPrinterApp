@@ -7,8 +7,6 @@ import java.io.IOException;
 import java.util.Set;
 import java.util.UUID;
 
-import android.Manifest;
-import android.app.ListActivity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
@@ -16,23 +14,26 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
-public class DeviceListActivity extends ListActivity {
+import androidx.appcompat.app.AppCompatActivity;
+
+public class DeviceListActivity extends AppCompatActivity {
     private static String TAG = "---DeviceList";
 
     static public final int REQUEST_CONNECT_BT = 0*2300;
     static private final int REQUEST_ENABLE_BT = 0*1000;
     static private BluetoothAdapter mBluetoothAdapter = null;
     static private ArrayAdapter<String> mArrayAdapter = null;
+    ListView mPairedListView;
 
     static private ArrayAdapter<BluetoothDevice> btDevices = null;
 
@@ -45,8 +46,17 @@ public class DeviceListActivity extends ListActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        setContentView(R.layout.activity_device_list);
         setTitle("Bluetooth Devices");
+
+        mPairedListView = (ListView) findViewById(R.id.paired_devices);
+        mPairedListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                onListItemClick(i,l);
+            }
+        });
+
 
         try {
             if (initDevicesList() != 0) {
@@ -119,7 +129,9 @@ public class DeviceListActivity extends ListActivity {
         mArrayAdapter = new ArrayAdapter<String>(getApplicationContext(),
                 R.layout.layout_list);
 
-        setListAdapter(mArrayAdapter);
+//        setListAdapter(mArrayAdapter);
+
+        mPairedListView.setAdapter(mArrayAdapter);
 
         Intent enableBtIntent = new Intent(
                 BluetoothAdapter.ACTION_REQUEST_ENABLE);
@@ -205,10 +217,8 @@ public class DeviceListActivity extends ListActivity {
         }
     };
 
-    @Override
-    protected void onListItemClick(ListView l, View v, final int position,
+    protected void onListItemClick( final int position,
                                    long id) {
-        super.onListItemClick(l, v, position, id);
 
         if (mBluetoothAdapter == null) {
             return;

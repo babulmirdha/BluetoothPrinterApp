@@ -8,6 +8,7 @@
         <entry key="Thermal-Printer/src/main/res/drawable/bg_gradient_toolbar.xml" value="0.1" />
         <entry key="Thermal-Printer/src/main/res/drawable/ic_circle.xml" value="0.1" />
         <entry key="Thermal-Printer/src/main/res/drawable/ic_love.xml" value="0.1" />
+        <entry key="Thermal-Printer/src/main/res/layout/activity_device_list.xml" value="0.2703804347826087" />
         <entry key="Thermal-Printer/src/main/res/layout/activity_main.xml" value="0.1828774062816616" />
         <entry key="app/src/main/res/layout/bt_device_list.xml" value="0.1" />
       </map>
