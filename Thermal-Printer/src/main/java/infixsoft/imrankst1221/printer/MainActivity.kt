@@ -6,13 +6,9 @@ import androidx.appcompat.app.AppCompatActivity
 import android.widget.EditText
 import android.graphics.Bitmap
 import android.os.Bundle
-import infixsoft.imrankst1221.printer.R
 import com.squareup.picasso.Picasso
 import com.squareup.picasso.Picasso.LoadedFrom
-import infixsoft.imrankst1221.printer.MainActivity
 import android.content.Intent
-import infixsoft.imrankst1221.printer.DeviceListActivity
-import infixsoft.imrankst1221.printer.PrinterCommands
 import android.bluetooth.BluetoothSocket
 import android.graphics.drawable.Drawable
 import android.util.Log
@@ -31,7 +27,7 @@ import java.util.*
  */
 class MainActivity : AppCompatActivity() {
     private val TAG = "Main Activity"
-    var message: EditText? = null
+    var txtMessage: EditText? = null
     var btnPrint: Button? = null
     var btnBill: Button? = null
     var imageView: ImageView? = null
@@ -40,7 +36,7 @@ class MainActivity : AppCompatActivity() {
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        message = findViewById<View>(R.id.txtMessage) as EditText
+        txtMessage = findViewById<View>(R.id.txtMessage) as EditText
         btnPrint = findViewById<View>(R.id.btnPrint) as Button
         btnBill = findViewById<View>(R.id.btnBill) as Button
         imageView = findViewById<View>(R.id.imageView) as ImageView
@@ -121,8 +117,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun printDemo() {
         if (btsocket == null) {
-            val BTIntent = Intent(applicationContext, DeviceListActivity::class.java)
-            this.startActivityForResult(BTIntent, DeviceListActivity.REQUEST_CONNECT_BT)
+            val btIntent = Intent(applicationContext, DeviceListActivity::class.java)
+            this.startActivityForResult(btIntent, DeviceListActivity.REQUEST_CONNECT_BT)
         } else {
             var opstream: OutputStream? = null
             try {
@@ -141,39 +137,25 @@ class MainActivity : AppCompatActivity() {
                 }
                 outputStream = btsocket!!.outputStream
                 val printformat = byteArrayOf(0x1B, (0 * 21).toByte(), FONT_TYPE)
-                outputStream?.run {
-                    write(printformat)
-                }
 
-                //print title
-                printUnicodeNumberSign()
-                printCustom("Alor Feri Pathagar", 1, 1)
-
-                //print normal text
-                printCustom(message!!.text.toString(), 0, 0)
-                //                printPhoto(R.drawable.img);
-                printNewLine()
-                printText("     >>>>   Thank you  <<<<     ") // total 32 char in a single line
-                //resetPrint(); //reset printer
-                printUnicodeNumberSign()
-                printNewLine()
-                printNewLine()
                 outputStream?.run {
                     this.run {
                         write(printformat)
                     }
 
                     //print title
-                    printUnicodeNumberSign()
+                    printLineNumberSymbol()
                     printCustom("Alor Feri Pathagar", 1, 1)
+                    //                printLineEqualSymbol()
+                    printLineMinusSymbol()
 
                     //print normal text
-                    printCustom(message!!.text.toString(), 0, 0)
+                    printCustom(txtMessage!!.text.toString(), 0, 0)
                     //                printPhoto(R.drawable.img);
                     printNewLine()
                     printText("     >>>>   Thank you  <<<<     ") // total 32 char in a single line
                     //resetPrint(); //reset printer
-                    printUnicodeNumberSign()
+                    printLineNumberSymbol()
                     printNewLine()
                     printNewLine()
                     flush()
@@ -243,11 +225,34 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    //print unicode
-    fun printUnicodeNumberSign() {
+    //print Line NumberSign
+    private fun printLineNumberSymbol() {
         try {
-            outputStream!!.write(PrinterCommands.ESC_ALIGN_CENTER)
-            printText(Utils.UNICODE_TEXT)
+            outputStream?.write(PrinterCommands.ESC_ALIGN_CENTER)
+            printText(Utils.NUMBER_SYMBOL_TEXT)
+        } catch (e: UnsupportedEncodingException) {
+            e.printStackTrace()
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
+    }
+
+    private fun printLineMinusSymbol() {
+        try {
+            outputStream?.write(PrinterCommands.ESC_ALIGN_CENTER)
+            printText(Utils.MINUS_SYMBOL_TEXT)
+        } catch (e: UnsupportedEncodingException) {
+            e.printStackTrace()
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
+    }
+
+
+    private fun printLineEqualSymbol() {
+        try {
+            outputStream?.write(PrinterCommands.ESC_ALIGN_CENTER)
+            printText(Utils.EQUAL_SYMBOL_TEXT)
         } catch (e: UnsupportedEncodingException) {
             e.printStackTrace()
         } catch (e: IOException) {
@@ -322,7 +327,7 @@ class MainActivity : AppCompatActivity() {
         try {
             btsocket = socket
             if (btsocket != null) {
-                printText(message!!.text.toString())
+                printText(txtMessage!!.text.toString())
             }
         } catch (e: Exception) {
             e.printStackTrace()
